@@ -5,3 +5,6 @@ gradle-wrapper.jar
 /gradlew.bat
 /local.properties
 GeneratedPluginRegistrant.java
+
+# Do not expose the Firebase project descriptor publicly:
+/app/google-services.json
