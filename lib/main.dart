@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -51,6 +53,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  @override
+  void initState() {
+    initFirebase();
+
+    super.initState();
+  }
+
+  void initFirebase() async {
+    final FirebaseAnalytics analytics = FirebaseAnalytics();
+    await analytics.setUserProperty(name: 'app_country', value: 'japan');
+
+    final RemoteConfig remoteConfig = await RemoteConfig.instance;
+    await remoteConfig.fetch(expiration: const Duration());
+    await remoteConfig.activateFetched();
+    print('Country: ' + remoteConfig.getString('country'));
+  }
 
   void _incrementCounter() {
     setState(() {
